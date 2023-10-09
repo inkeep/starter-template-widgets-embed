@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandbox widget embed</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/preflight.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/inkeep.widgets.min.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js"
+    ></script>
+
+    <!-- style overrides -->
+    <style>
+      .inkeep-codeblock-highlighter {
+        background: #f3f3f3 !important;
+        padding: 12px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <div id="root">
+      <div class="centered">
+        <div id="chat-button"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      const envConfig = {
+        INTEGRATION_ID: import.meta.env.VITE_INKEEP_INTEGRATION_ID ?? '',
+        API_KEY: import.meta.env.VITE_INKEEP_API_KEY ?? '',
+        ORGANIZATION_ID: import.meta.env.VITE_INKEEP_ORGANIZATION_ID ?? '',
+      };
+
+      Inkeep({
+        integrationId: envConfig.INTEGRATION_ID || '',
+        apiKey: envConfig.API_KEY || '',
+        product: '',
+        organizationDisplayName: 'Inkeep',
+        organizationId: envConfig.ORGANIZATION_ID || '',
+        primaryBrandColor: 'turquoise',
+        userId: '',
+        userEmail: 'dev@inkeep.com',
+        userName: 'Inkeep',
+        optOutAllAnalytics: true,
+        optOutAnalyticalCookies: true,
+        optOutFunctionalCookies: true,
+        highlighter: 'hljs',
+        theme: {
+          components: {
+            SearchBarTrigger: {
+              defaultProps: {
+                size: 'compact',
+                variant: 'emphasized',
+              },
+          },
+        },
+        }
+      }).embed({
+        componentType: 'EmbeddedChat',
+        targetElement: document.getElementById('chat-button'),
+        properties: {
+          aiChatSettings: {
+            placeholder: 'Type your message here...',
+            isChatSharingEnabled: true,
+            shareChatUrlBasePath: 'http://localhost:5175/shared-chat',
+            disclaimerSettings: {
+              isDisclaimerEnabled: true,
+              disclaimerText: 'This is a disclaimer',
+            },
+          },
+          searchSettings: {
+            placeholder: 'Search...',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
