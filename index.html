@@ -20,10 +20,26 @@
       src="https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js"
     ></script>
 
-    <!-- style overrides -->
+    <style>
+      @layer reset, base, tokens, recipes, utilities;
+
+      html,
+      body,
+      #root,
+      .inkeep-widget-root {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        max-height: 100vh;
+      }
+    </style>
+
+    <!-- example of style overrides -->
     <style>
       .inkeep-codeblock-highlighter {
-        background: #f3f3f3 !important;
+        background: #262626 !important;
         padding: 12px !important;
       }
     </style>
@@ -32,8 +48,8 @@
     <div id="app"></div>
 
     <div id="root">
-      <div class="centered">
-        <div id="chat-button"></div>
+      <div class="inkeep-widget-root">
+        <div id="inkeep-widgets-div"></div>
       </div>
     </div>
 
@@ -45,6 +61,7 @@
       };
 
       Inkeep({
+        // baseSettings here
         integrationId: envConfig.INTEGRATION_ID || '',
         apiKey: envConfig.API_KEY || '',
         product: '',
@@ -69,11 +86,12 @@
         },
         }
       }).embed({
-        componentType: 'EmbeddedChat',
-        targetElement: document.getElementById('chat-button'),
+        componentType: 'EmbeddedChat', // options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
+        targetElement: document.getElementById('inkeep-widgets-div'),
         properties: {
+          // component specific settings here
           aiChatSettings: {
-            placeholder: 'Type your message here...',
+            placeholder: 'Ask me anything...',
             isChatSharingEnabled: true,
             shareChatUrlBasePath: 'http://localhost:5175/shared-chat',
             disclaimerSettings: {
