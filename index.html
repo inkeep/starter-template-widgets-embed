@@ -34,8 +34,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
-        max-height: 100vh;
       }
       .search-bar-wrapper {
         width: 100%;
@@ -56,6 +54,10 @@
         background-color: white;
         border: 1px solid #ccc;
       }
+      #embedded-chat {
+        max-height: 800px;
+        padding: 4em 0px;
+      }
     </style>
 
     <!-- example of style overrides -->
@@ -75,6 +77,13 @@
           <div id="search-bar"></div>
         </div>
         <button id="custom-trigger-button">custom widget toggle</button>
+        <label for="component-type">select a filter</label>
+        <select name="environment" id="environment-select">
+          <option value="">--Please choose an option--</option>
+          <option value="Narnia">Narnia</option>
+          <option value="Atlantis">Atlantis</option>
+          <option value="Neverland">Neverland</option>
+        </select>
         <div id="embedded-chat"></div>
         <div id="custom-trigger"></div>
       </div>
@@ -105,7 +114,7 @@
       });
 
       // EmbeddedChat
-      inkeep.embed({
+      const embeddedChat = inkeep.embed({
         componentType: 'EmbeddedChat', // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
         targetElement: document.getElementById('embedded-chat'), // required
         properties: {
@@ -195,6 +204,21 @@
         },
       });
       // ------------------------------
+
+      const environmentSelect = document.getElementById('environment-select');
+
+      environmentSelect.addEventListener('change', (e) => {
+        const environment = e.target.value;
+        embeddedChat.render({
+          baseSettings: {
+            filters: {
+              attributes: {
+                env: environment,
+              },
+            },
+          }
+        });
+      });
 
 
     </script>
