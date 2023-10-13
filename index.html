@@ -5,27 +5,30 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sandbox widget embed</title>
+    <!-- widget styles (required) -->
     <link
       rel="stylesheet"
       type="text/css"
-      href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/preflight.css"
+      href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/style.css"
+      defer
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/inkeep.widgets.min.css"
-    />
+
+    <!-- widget script (required) -->
     <script
       type="module"
       src="https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js"
+      defer
     ></script>
 
+    <!-- sandbox styling (not required) -->
     <style>
-      @layer reset, base, tokens, recipes, utilities;
-
       html,
       body,
-      #root,
+      #root {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
       .inkeep-widget-root {
         display: flex;
         flex-direction: column;
@@ -34,14 +37,33 @@
         height: 100%;
         max-height: 100vh;
       }
+      .search-bar-wrapper {
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 20px;
+        height: 5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #search-bar {
+        flex: 1;
+      }
+      #custom-trigger-button {
+        margin-bottom: 20px;
+        padding: 12px;
+        border-radius: 4px;
+        background-color: white;
+        border: 1px solid #ccc;
+      }
     </style>
 
     <!-- example of style overrides -->
     <style>
-      .inkeep-codeblock-highlighter {
+      /* .inkeep-codeblock-highlighter {
         background: #262626 !important;
         padding: 12px !important;
-      }
+      } */
     </style>
   </head>
   <body>
@@ -49,49 +71,83 @@
 
     <div id="root">
       <div class="inkeep-widget-root">
-        <div id="inkeep-widgets-div"></div>
+        <div class="search-bar-wrapper">
+          <div id="search-bar"></div>
+        </div>
+        <button id="custom-trigger-button">custom widget toggle</button>
+        <div id="embedded-chat"></div>
+        <div id="custom-trigger"></div>
       </div>
     </div>
 
     <script type="module">
+    
       const envConfig = {
         INTEGRATION_ID: import.meta.env.VITE_INKEEP_INTEGRATION_ID ?? '',
         API_KEY: import.meta.env.VITE_INKEEP_API_KEY ?? '',
         ORGANIZATION_ID: import.meta.env.VITE_INKEEP_ORGANIZATION_ID ?? '',
       };
 
-      Inkeep({
+      // initialize with baseSettings
+      const inkeep =  Inkeep({
         // baseSettings here
-        integrationId: envConfig.INTEGRATION_ID || '',
-        apiKey: envConfig.API_KEY || '',
-        product: '',
+        integrationId: envConfig.INTEGRATION_ID || '', // required
+        apiKey: envConfig.API_KEY || '', // required
+        organizationId: envConfig.ORGANIZATION_ID || '', // required
         organizationDisplayName: 'Inkeep',
-        organizationId: envConfig.ORGANIZATION_ID || '',
-        primaryBrandColor: 'turquoise',
+        primaryBrandColor: 'black',
         userId: '',
         userEmail: 'dev@inkeep.com',
         userName: 'Inkeep',
         optOutAllAnalytics: true,
         optOutAnalyticalCookies: true,
         optOutFunctionalCookies: true,
-        highlighter: 'hljs',
-        theme: {
-          components: {
-            SearchBarTrigger: {
-              defaultProps: {
-                size: 'compact',
-                variant: 'emphasized',
-              },
-          },
-        },
-        }
-      }).embed({
-        componentType: 'EmbeddedChat', // options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
-        targetElement: document.getElementById('inkeep-widgets-div'),
+      });
+
+      // EmbeddedChat
+      inkeep.embed({
+        componentType: 'EmbeddedChat', // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
+        targetElement: document.getElementById('embedded-chat'), // required
         properties: {
-          // component specific settings here
+          // optional component specific settings here
           aiChatSettings: {
             placeholder: 'Ask me anything...',
+            isChatSharingEnabled: true,
+            shareChatUrlBasePath: 'http://localhost:5175/shared-chat',
+            disclaimerSettings: {
+              isDisclaimerEnabled: true,
+            },
+          },
+          searchSettings: {
+            placeholder: 'Search...',
+          },
+        },
+      });
+      // ------------------------------
+
+
+      // SearchBar
+      const searchBar = inkeep.embed({
+        componentType: 'SearchBar',
+        targetElement: document.getElementById('search-bar'),
+        properties: {
+          baseSettings: {
+           theme: {
+              components: {
+                SearchBarTrigger: {
+                  defaultProps: {
+                    size: 'medium',
+                    // variant: 'emphasized',
+                    style: {
+                      width: '100%',
+                    }
+                  },
+                },
+              },
+            },
+          },
+          aiChatSettings: {
+            placeholder: 'Type your message here...',
             isChatSharingEnabled: true,
             shareChatUrlBasePath: 'http://localhost:5175/shared-chat',
             disclaimerSettings: {
@@ -101,9 +157,46 @@
           },
           searchSettings: {
             placeholder: 'Search...',
+            tabSettings: {
+              isAllTabEnabled: true,
+              tabOrderByLabel: ['Resources', 'Blog', 'Solutions'],
+              rootBreadcrumbsToUseAsTabs: ['Blog'],
+              alwaysDisplayedTabs: ['Blog'],
+            },
+            shouldOpenLinksInNewTab: true,
           },
         },
       });
+      // ------------------------------
+
+
+      // CustomTrigger
+      const triggerButton = document.getElementById('custom-trigger-button');
+
+      triggerButton.addEventListener('click', () => {
+        customTrigger.render({
+          isOpen: true,
+        })
+      });
+
+      const onClose = () => {
+        customTrigger.render({
+          isOpen: false,
+        })
+      }
+
+      const customTrigger = inkeep.embed({
+        componentType: 'CustomTrigger',
+        targetElement: document.getElementById('custom-trigger'),
+        properties: {
+          // ... additional properties here
+          isOpen: false,
+          onClose,
+        },
+      });
+      // ------------------------------
+
+
     </script>
   </body>
 </html>
