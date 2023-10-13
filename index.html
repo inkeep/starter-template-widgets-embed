@@ -205,12 +205,21 @@
       });
       // ------------------------------
 
+      // example of how to change a prop and re-render the component so that it updates
       const environmentSelect = document.getElementById('environment-select');
+
+      // for a visual demonstration
+      const colorMap = {
+        Narnia: '#ff9463',
+        Atlantis: '#04e5de6',
+        Neverland: '#83e290',
+      }
 
       environmentSelect.addEventListener('change', (e) => {
         const environment = e.target.value;
         embeddedChat.render({
           baseSettings: {
+            primaryBrandColor: colorMap[environment] ?? 'black',
             filters: {
               attributes: {
                 env: environment,
