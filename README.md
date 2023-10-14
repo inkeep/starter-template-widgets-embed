@@ -23,13 +23,6 @@ npm run dev
 ### Add our js snippet and styles
 
 ```
-<!-- widget styles (required) -->
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/style.css"
-  defer
-/>
 
 <!-- widget script (required) -->
 <script
@@ -38,6 +31,11 @@ npm run dev
   defer
 ></script>
 ```
+NOTE:
+vist https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js
+and replace @latest with current version, example: https://unpkg.com/@inkeep/widgets-embed@0.0.5/dist/embed.js
+to avoid any possible breaking changes
+
 
 ### Initialize with base settings
 ```

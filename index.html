@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/sandbox-styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- import any custom fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Space+Mono&display=swap" rel="stylesheet">
+
     <title>Sandbox widget embed</title>
-    <!-- widget styles (required) -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/@inkeep/widgets-embed@latest/dist/style.css"
-      defer
-    />
 
     <!-- widget script (required) -->
     <script
@@ -20,53 +20,6 @@
       defer
     ></script>
 
-    <!-- sandbox styling (not required) -->
-    <style>
-      html,
-      body,
-      #root {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
-      .inkeep-widget-root {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      .search-bar-wrapper {
-        width: 100%;
-        max-width: 500px;
-        margin-bottom: 20px;
-        height: 5em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #search-bar {
-        flex: 1;
-      }
-      #custom-trigger-button {
-        margin-bottom: 20px;
-        padding: 12px;
-        border-radius: 4px;
-        background-color: white;
-        border: 1px solid #ccc;
-      }
-      #embedded-chat {
-        max-height: 800px;
-        padding: 4em 0px;
-      }
-    </style>
-
-    <!-- example of style overrides -->
-    <style>
-      /* .inkeep-codeblock-highlighter {
-        background: #262626 !important;
-        padding: 12px !important;
-      } */
-    </style>
   </head>
   <body>
     <div id="app"></div>
@@ -119,6 +72,20 @@
         targetElement: document.getElementById('embedded-chat'), // required
         properties: {
           // optional component specific settings here
+          stylesheetUrls: [
+            '/widget-overrides.css', // example of how to override styles via a stylesheet
+          ],
+          baseSettings: {
+            theme: {
+              tokens: {
+                fonts: {
+                  heading: "'Space Grotesk'",
+                  body: "'Space Grotesk'", // set custom font here
+                  mono: "'Space Mono', monospace",
+                },
+              },
+            },
+          },
           aiChatSettings: {
             placeholder: 'Ask me anything...',
             isChatSharingEnabled: true,
@@ -126,9 +93,6 @@
             disclaimerSettings: {
               isDisclaimerEnabled: true,
             },
-          },
-          searchSettings: {
-            placeholder: 'Search...',
           },
         },
       });
