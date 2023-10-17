@@ -25,6 +25,7 @@ body,
 
 #search-bar {
   flex: 1;
+  height: 100%;
 }
 
 #custom-trigger-button {
@@ -36,7 +37,7 @@ body,
 }
 
 #embedded-chat {
-  max-height: 800px;
+  height: 800px;
   padding: 4em 0px;
 }
 
