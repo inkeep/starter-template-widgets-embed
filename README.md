@@ -18,7 +18,7 @@ See .env.sample for necessary env vars
 npm run dev
 ```
 
-See [index.html](https://github.com/inkeep/starter-template-widgets-embed/blob/main/index.html) for the live example.
+See [index.html](https://github.com/inkeep/starter-template-widgets-embed/blob/main/index.html) for the example config.
 
 ## To get started integrating into your own app
 
