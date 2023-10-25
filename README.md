@@ -18,6 +18,8 @@ See .env.sample for necessary env vars
 npm run dev
 ```
 
+See [index.html](https://github.com/inkeep/starter-template-widgets-embed/blob/main/index.html) for the live example.
+
 ## To get started integrating into your own app
 
 ### Add the Inkeep JS snippet
@@ -112,7 +114,7 @@ aiChatSettings: {
 If you have multiple components on the same page, it might be convenient to instantiate an Inkeep object with the same base settings. 
 
 ```
-const inkeepWidget =  Inkeep({
+const inkeepBase =  Inkeep({
   integrationId: envConfig.INTEGRATION_ID || '', // required
   apiKey: envConfig.API_KEY || '', // required
   organizationId: envConfig.ORGANIZATION_ID || '', // required
@@ -127,7 +129,7 @@ const inkeepWidget =  Inkeep({
 });
 ```
 
-You can then use `inkeep.embed()` to instantiate different components with the same base settings.
+You can then use `inkeepBase.embed()` to instantiate different components with the same base settings.
 
 ### Syncing with dark mode and changing props after the initial render
 How color mode is changed van vary per web app platform. Regardless, you can use the `render` method to update an instance of the component with any new properties, like `colorMode`.
