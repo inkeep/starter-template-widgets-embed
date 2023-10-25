@@ -50,16 +50,18 @@ const inkeepWidget = Inkeep.embed({
       integrationId: envConfig.INTEGRATION_ID || '', // required
       apiKey: envConfig.API_KEY || '', // required
       organizationId: envConfig.ORGANIZATION_ID || '', // required
+      organizationDisplayName: 'Inkeep',
+      primaryBrandColor: 'black'
       //... optional base settings
     },
     aiChatSettings: {
-      // optional ai chat settings
+      // optional
     },
     searchSettings: {
-      // optional search settings
+      // optional 
     },
     modalSettings: {
-      // optional modal settings
+      // optional
     }
   }
 });
@@ -75,13 +77,40 @@ Aside from `componentType` and `targetElement`, the `props` are the same type as
 - [Embedded Chat](https://docs.inkeep.com/react-components/embedded-chat)
 - [Custom Trigger](https://docs.inkeep.com/react-components/custom-trigger)
 
+For example, custom 'aiChatSettings' include:
+```
+{
+...otherProps,
+aiChatSettings: {
+    chatSubjectName: 'TimeGPT',
+    quickQuestions: [
+      'Example question 1',
+      'Example question 2',
+    ],
+    botAvatarSrcUrl: 'https://mydomain.com/icon',
+    botAvatarDarkSrcUrl: 'https://mydomain.com/dark_icon',
+    getHelpCallToActions: [
+      {
+        url: 'http://github.com/{org}',
+        name: 'GitHub',
+        icon: { builtIn: 'FaGithub' }
+      },
+      {
+        name: 'Community',
+        url: 'https://mycommunity.com',
+        icon: { builtIn: 'IoPeopleOutline' }, // FaDiscourse, FaSlack, FaDiscord, IoHelpBuoyOutline, IoMail and others also available
+      },
+    ],
+  }
+}
+```
+
 ### Share base settings across components
 
 If you have multiple components on the same page, it might be convenient to instantiate an Inkeep object with the same base settings. 
 
 ```
 const inkeep =  Inkeep({
-  // baseSettings here
   integrationId: envConfig.INTEGRATION_ID || '', // required
   apiKey: envConfig.API_KEY || '', // required
   organizationId: envConfig.ORGANIZATION_ID || '', // required
@@ -96,7 +125,7 @@ const inkeep =  Inkeep({
 });
 ```
 
-You can then use inkeep.embed() multiple times with the same base settings
+You can then use `inkeep.embed()` multiple times with the same base settings
 
 ### Syncing with dark mode and changing props after the initial render
 This can vary depending on the platform. You can use the `render` method to update an instance of the component with new properties, like the colorMode.
