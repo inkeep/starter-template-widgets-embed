@@ -20,7 +20,7 @@ npm run dev
 
 ## To get started integrating into your own app
 
-### Add our js snippet and styles
+### Add the Inkeep JS snippet
 
 ```
 
@@ -35,12 +35,12 @@ NOTE:
 vist https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js
 and replace `@<version>` with the current latest version, example: `https://unpkg.com/@inkeep/widgets-embed@0.2.215/dist/embed.js`. 
 
-### Call the embed function
+### Basic example
 
-Within a `<script type="module"> ... </script>` tag, include the following
+Within a `<script type="module"> {{ code here }} </script>` tag, use the `embed()` function to insert one of our components into an HTML element on the page.
 
 ```
-const inkeepWidget = Inkeep.embed({
+const inkeepWidget = Inkeep().embed({
   componentType: 'ChatButton', // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
   targetElement: document.getElementById('inkeep-placeholder'), // required, HTML element to render the widget into
   stylesheetUrls: [
@@ -71,7 +71,7 @@ const inkeepWidget = Inkeep.embed({
 ### Customize the component
 In 
 
-`Inkeep.embed({...props})`
+`Inkeep().embed({...props})`
 
 Aside from `componentType` and `targetElement`, the `props` are the same type as seen in any of the React components:
 - [Chat Button](https://docs.inkeep.com/react-components/chat-button)
@@ -112,7 +112,7 @@ aiChatSettings: {
 If you have multiple components on the same page, it might be convenient to instantiate an Inkeep object with the same base settings. 
 
 ```
-const inkeep =  Inkeep({
+const inkeepWidget =  Inkeep({
   integrationId: envConfig.INTEGRATION_ID || '', // required
   apiKey: envConfig.API_KEY || '', // required
   organizationId: envConfig.ORGANIZATION_ID || '', // required
@@ -127,7 +127,7 @@ const inkeep =  Inkeep({
 });
 ```
 
-You can then use `inkeep.embed()` multiple times with the same base settings.
+You can then use `inkeep.embed()` to instantiate different components with the same base settings.
 
 ### Syncing with dark mode and changing props after the initial render
 How color mode is changed van vary per web app platform. Regardless, you can use the `render` method to update an instance of the component with any new properties, like `colorMode`.
@@ -146,6 +146,7 @@ colorModeToggle.addEventListener('change', (e) => { // whatever logic you use to
         }
       }
   });
+
 });
 ```
 
