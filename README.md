@@ -86,7 +86,7 @@ For example, custom 'aiChatSettings' often include:
 {
 ...otherProps,
 aiChatSettings: {
-    chatSubjectName: 'TimeGPT',
+    chatSubjectName: '{Company or Product Name}',
     quickQuestions: [
       'Example question 1',
       'Example question 2',
