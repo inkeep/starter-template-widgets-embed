@@ -45,10 +45,10 @@ Within a `<script type="module"> {{ code here }} </script>` tag, use the `embed(
 const inkeepWidget = Inkeep().embed({
   componentType: 'ChatButton', // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
   targetElement: document.getElementById('inkeep-placeholder'), // required, HTML element to render the widget into
-  stylesheetUrls: [
-    '/widget-overrides.css', // optional custom stylings
-  ],
   properties: {
+    stylesheetUrls: [
+      '/widget-overrides.css', // optional custom stylings
+    ],
     baseSettings: {
       integrationId: envConfig.INTEGRATION_ID || '', // required
       apiKey: envConfig.API_KEY || '', // required
