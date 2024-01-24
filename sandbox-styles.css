@@ -6,6 +6,23 @@ body,
   height: 100%;
 }
 
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+  background-color: #0d0d0d;
+  color: #fff;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 2em;
+}
+
 .inkeep-widget-root {
   display: flex;
   flex-direction: column;
@@ -13,32 +30,20 @@ body,
   justify-content: center;
 }
 
-.search-bar-wrapper {
+#search-bar {
   width: 100%;
   max-width: 500px;
-  margin-bottom: 20px;
-  height: 5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#search-bar {
-  flex: 1;
-  height: 100%;
+  height: 48px;
 }
 
 #custom-trigger-button {
-  margin-bottom: 20px;
   padding: 12px;
   border-radius: 4px;
-  background-color: white;
-  border: 1px solid #ccc;
 }
 
 #embedded-chat {
   height: 800px;
-  padding: 4em 0px;
+  padding: 2em 0px;
 }
 
 
@@ -46,10 +51,6 @@ body,
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -82,6 +83,7 @@ h1 {
 
 #app {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -115,7 +117,6 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -127,15 +128,3 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
