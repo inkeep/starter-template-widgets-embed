@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -7,9 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- import any custom fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Space+Mono&display=swap"
+      rel="stylesheet"
+    />
 
     <title>Sandbox widget embed</title>
 
@@ -19,61 +22,79 @@
       src="https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js"
       defer
     ></script>
-
   </head>
   <body>
-    <div id="app"></div>
-
     <div id="root">
-      <div class="inkeep-widget-root">
-        <div class="search-bar-wrapper">
+      <div id="app">
+        <div class="toolbar">
+          <button id="color-mode-toggle">🌞</button>
+          <button id="custom-trigger-button">toggle custom widget</button>
           <div id="search-bar"></div>
         </div>
-        <button id="custom-trigger-button">custom widget toggle</button>
-        <label for="component-type">select a filter</label>
-        <select name="environment" id="environment-select">
-          <option value="">--Please choose an option--</option>
-          <option value="Narnia">Narnia</option>
-          <option value="Atlantis">Atlantis</option>
-          <option value="Neverland">Neverland</option>
-        </select>
-        <div id="embedded-chat"></div>
-        <div id="custom-trigger"></div>
+        <div class="inkeep-widget-root">
+          <label for="component-type">select a filter</label>
+          <select name="environment" id="environment-select">
+            <option value="">--Please choose an option--</option>
+            <option value="Narnia">Narnia</option>
+            <option value="Atlantis">Atlantis</option>
+            <option value="Neverland">Neverland</option>
+          </select>
+          <div id="embedded-chat"></div>
+          <div id="custom-trigger"></div>
+        </div>
       </div>
     </div>
 
+    <!-- script to toggle color mode in parent ui (for example purposes only) -->
+    <script src="./color-mode.js"></script>
+
     <script type="module">
-    
       const envConfig = {
-        INTEGRATION_ID: import.meta.env.VITE_INKEEP_INTEGRATION_ID ?? '',
-        API_KEY: import.meta.env.VITE_INKEEP_API_KEY ?? '',
-        ORGANIZATION_ID: import.meta.env.VITE_INKEEP_ORGANIZATION_ID ?? '',
+        INTEGRATION_ID: import.meta.env.VITE_INKEEP_INTEGRATION_ID ?? "",
+        API_KEY: import.meta.env.VITE_INKEEP_API_KEY ?? "",
+        ORGANIZATION_ID: import.meta.env.VITE_INKEEP_ORGANIZATION_ID ?? "",
       };
 
       // initialize with baseSettings
-      const inkeep =  Inkeep({
+      const inkeep = Inkeep({
         // baseSettings here
-        integrationId: envConfig.INTEGRATION_ID || '', // required
-        apiKey: envConfig.API_KEY || '', // required
-        organizationId: envConfig.ORGANIZATION_ID || '', // required
-        organizationDisplayName: 'Inkeep',
-        primaryBrandColor: 'black',
-        userId: '',
-        userEmail: 'dev@inkeep.com',
-        userName: 'Inkeep',
+        integrationId: envConfig.INTEGRATION_ID || "", // required
+        apiKey: envConfig.API_KEY || "", // required
+        organizationId: envConfig.ORGANIZATION_ID || "", // required
+        organizationDisplayName: "Inkeep",
+        primaryBrandColor: "black",
+        userId: "",
+        userEmail: "dev@inkeep.com",
+        userName: "Inkeep",
         optOutAllAnalytics: true,
         optOutAnalyticalCookies: true,
         optOutFunctionalCookies: true,
       });
 
+      // optional used to sync widget color mode with UI
+      const colorModeSync = {
+        observedElement: document.documentElement, // element to observe for color mode changes
+        // Function that return true if dark mode otherwise false
+        isDarkModeCallback: (el) => {
+          return el.classList.contains("dark");
+        },
+        colorModeAttribute: "class", // attribute that changes on the observedElement when colorMode changes (ex. `"class"` or `"data-theme"`)
+        // another common example: if using data attributes instead of classes for dark mode
+        // isDarkModeCallback: (el) => {
+        //   return el.dataset.theme === 'dark';
+        // },
+        // colorModeAttribute: 'data-theme',
+      };
+
       // EmbeddedChat
       const embeddedChat = inkeep.embed({
-        componentType: 'EmbeddedChat', // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
-        targetElement: document.getElementById('embedded-chat'), // required
+        componentType: "EmbeddedChat", // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
+        targetElement: document.getElementById("embedded-chat"), // required (optional for CustomTrigger or ChatButton)
+        colorModeSync, // optional
         properties: {
           // optional component specific settings here
           stylesheetUrls: [
-            '/widget-overrides.css', // example of how to override styles via a stylesheet
+            "/widget-overrides.css", // example of how to override styles via a stylesheet
           ],
           baseSettings: {
             theme: {
@@ -87,9 +108,9 @@
             },
           },
           aiChatSettings: {
-            placeholder: 'Ask me anything...',
+            placeholder: "Ask me anything...",
             isChatSharingEnabled: true,
-            shareChatUrlBasePath: 'http://localhost:5175/shared-chat',
+            shareChatUrlBasePath: "http://localhost:5175/shared-chat",
             disclaimerSettings: {
               isDisclaimerEnabled: true,
             },
@@ -98,43 +119,43 @@
       });
       // ------------------------------
 
-
       // SearchBar
       const searchBar = inkeep.embed({
-        componentType: 'SearchBar',
-        targetElement: document.getElementById('search-bar'),
+        componentType: "SearchBar",
+        targetElement: document.getElementById("search-bar"),
+        colorModeSync,
         properties: {
           baseSettings: {
-           theme: {
+            theme: {
               components: {
                 SearchBarTrigger: {
                   defaultProps: {
-                    size: 'medium',
+                    size: "expand",
                     // variant: 'emphasized',
                     style: {
-                      width: '100%',
-                    }
+                      width: "100%",
+                    },
                   },
                 },
               },
             },
           },
           aiChatSettings: {
-            placeholder: 'Type your message here...',
+            placeholder: "Type your message here...",
             isChatSharingEnabled: true,
-            shareChatUrlBasePath: 'http://localhost:5175/shared-chat',
+            shareChatUrlBasePath: "http://localhost:5175/shared-chat",
             disclaimerSettings: {
               isDisclaimerEnabled: true,
-              disclaimerText: 'This is a disclaimer',
+              disclaimerText: "This is a disclaimer",
             },
           },
           searchSettings: {
-            placeholder: 'Search...',
+            placeholder: "Search...",
             tabSettings: {
               isAllTabEnabled: true,
-              tabOrderByLabel: ['Resources', 'Blog', 'Solutions'],
-              rootBreadcrumbsToUseAsTabs: ['Blog'],
-              alwaysDisplayedTabs: ['Blog'],
+              tabOrderByLabel: ["Resources", "Blog", "Solutions"],
+              rootBreadcrumbsToUseAsTabs: ["Blog"],
+              alwaysDisplayedTabs: ["Blog"],
             },
             shouldOpenLinksInNewTab: true,
           },
@@ -142,25 +163,43 @@
       });
       // ------------------------------
 
+      // ChatButton
+      const chatButton = inkeep.embed({
+        componentType: "ChatButton",
+        colorModeSync,
+        properties: {
+          baseSettings: {
+            // ...additional baseSettings here
+          },
+          aiChatSettings: {
+            // ...additional aiChatSettings here
+          },
+          searchSettings: {
+            // ...additional searchSettings here
+          },
+        },
+      });
+      // ------------------------------
 
       // CustomTrigger
-      const triggerButton = document.getElementById('custom-trigger-button');
+      const triggerButton = document.getElementById("custom-trigger-button");
 
-      triggerButton.addEventListener('click', () => {
+      triggerButton.addEventListener("click", () => {
         customTrigger.render({
           isOpen: true,
-        })
+        });
       });
 
       const onClose = () => {
         customTrigger.render({
           isOpen: false,
-        })
-      }
+        });
+      };
 
       const customTrigger = inkeep.embed({
-        componentType: 'CustomTrigger',
-        targetElement: document.getElementById('custom-trigger'),
+        componentType: "CustomTrigger",
+        targetElement: document.getElementById("custom-trigger"),
+        colorModeSync, // optional
         properties: {
           // ... additional properties here
           isOpen: false,
@@ -170,30 +209,28 @@
       // ------------------------------
 
       // example of how to change a prop and re-render the component so that it updates
-      const environmentSelect = document.getElementById('environment-select');
+      const environmentSelect = document.getElementById("environment-select");
 
       // for a visual demonstration
       const colorMap = {
-        Narnia: '#ff9463',
-        Atlantis: '#04e5de6',
-        Neverland: '#83e290',
-      }
+        Narnia: "#ff9463",
+        Atlantis: "#04e5de6",
+        Neverland: "#83e290",
+      };
 
-      environmentSelect.addEventListener('change', (e) => {
+      environmentSelect.addEventListener("change", (e) => {
         const environment = e.target.value;
         embeddedChat.render({
           baseSettings: {
-            primaryBrandColor: colorMap[environment] ?? 'black',
+            primaryBrandColor: colorMap[environment] ?? "black",
             filters: {
               attributes: {
                 env: environment,
               },
             },
-          }
+          },
         });
       });
-
-
     </script>
   </body>
 </html>
