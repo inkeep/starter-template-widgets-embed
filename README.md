@@ -1,4 +1,4 @@
-# Getting Started with Inkeep Widget Library (js snippet)
+# Inkeep Widget JS Library
 
 ## To run this sandbox
 
