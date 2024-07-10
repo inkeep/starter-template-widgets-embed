@@ -29,13 +29,13 @@ See [index.html](https://github.com/inkeep/starter-template-widgets-embed/blob/m
 <!-- widget script (required) -->
 <script
   type="module"
-  src="https://unpkg.com/@inkeep/widgets-embed@<version>/dist/embed.js"
+  src="https://unpkg.com/@inkeep/uikit-js@<version>/dist/embed.js"
   defer
 ></script>
 ```
 NOTE:
-vist https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js
-and replace `@<version>` with the current latest version, example: `https://unpkg.com/@inkeep/widgets-embed@0.2.215/dist/embed.js`. 
+vist https://unpkg.com/@inkeep/uikit-js@latest/dist/embed.js
+and replace `@<version>` with the current latest version, example: `https://unpkg.com/@inkeep/uikit-js@0.3.4/dist/embed.js`.
 
 ### Basic example
 
