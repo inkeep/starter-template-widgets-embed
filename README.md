@@ -46,15 +46,17 @@ const inkeepWidget = Inkeep().embed({
   componentType: 'ChatButton', // required, options: 'ChatButton', 'EmbeddedChat', 'SearchBar', 'CustomTrigger'
   targetElement: document.getElementById('inkeep-placeholder'), // required, HTML element to render the widget into
   properties: {
-    stylesheetUrls: [
-      '/widget-overrides.css', // optional custom stylings
-    ],
     baseSettings: {
       integrationId: envConfig.INTEGRATION_ID || '', // required
       apiKey: envConfig.API_KEY || '', // required
       organizationId: envConfig.ORGANIZATION_ID || '', // required
       organizationDisplayName: 'Inkeep',
-      primaryBrandColor: 'black'
+      primaryBrandColor: 'black',
+      theme: {
+        stylesheetUrls: [
+          '/widget-overrides.css', // optional custom stylings
+        ],
+      },
       //... optional base settings
     },
     aiChatSettings: {
