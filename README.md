@@ -134,7 +134,7 @@ const inkeepBase =  Inkeep({
 You can then use `inkeepBase.embed()` to instantiate different components with the same base settings.
 
 ### Syncing with dark mode and changing props after the initial render
-How color mode is changed van vary per web app platform. Regardless, you can use the `render` method to update an instance of the component with any new properties, like `colorMode`.
+How color mode is changed can vary per web app platform. Regardless, you can use the `render` method to update an instance of the component with any new properties, like `colorMode`.
 
 **Example**:
 ```
@@ -143,12 +143,9 @@ colorModeToggle.addEventListener('change', (e) => { // whatever logic you use to
 
   inkeepWidget.render({
     baseSettings: {
-      theme: {
-        ...inkeepWidget.baseSettings.theme,
-        colorMode: {
-          forcedColorMode: colorMode === "dark" ? "dark" : "light",
-        }
-      }
+      colorMode: {
+        forcedColorMode: colorMode === "dark" ? "dark" : "light",
+      },
   });
 
 });
