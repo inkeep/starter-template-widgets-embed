@@ -19,7 +19,7 @@
     <!-- widget script (required) -->
     <script
       type="module"
-      src="https://unpkg.com/@inkeep/widgets-embed@latest/dist/embed.js"
+      src="https://unpkg.com/@inkeep/uikit-js@latest/dist/embed.js"
       defer
     ></script>
   </head>
@@ -93,11 +93,11 @@
         colorModeSync, // optional
         properties: {
           // optional component specific settings here
-          stylesheetUrls: [
-            "/widget-overrides.css", // example of how to override styles via a stylesheet
-          ],
           baseSettings: {
             theme: {
+              stylesheetUrls: [
+                "/widget-overrides.css", // example of how to override styles via a stylesheet
+              ],
               tokens: {
                 fonts: {
                   heading: "'Space Grotesk'",
